@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright 2015. Alex Zhang aka. ztc1997
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+  <string name="app_name">Vibration Tuner</string>
+  <string name="description">Tune the Vibration Strength\n[Touch here for settings]</string>
+  <string name="global_vib_strength_title">Global Vibration Strength</string>
+  <string name="long_press_vib_strength_title">Long Press Vibration Strength</string>
+  <string name="virtual_key_vib_strength_title" >Virtual Key Vibration Strength</string>
+  <string name="keyboard_tap_vib_strength_title" >Keyboard Tap Vibration Strength</string>
+  <string name="clock_tick_vib_strength_title" >Clock Tick Vibration Strength</string>
+  <string name="calendar_date_vib_strength_title" >Calendar Date Vibration Strength</string>
+  <string name="special_vib_title">Special Vibration (Affected by Global Setting)</string>
+  <string name="hide_icon_title">Hide Icon</string>
+  <string name="show_icon_title">Show Icon</string>
+  <string name="msg_module_no_activated">It seems the module is not activated properly.</string>
+</resources>
