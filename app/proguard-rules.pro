@@ -15,3 +15,11 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class * implements de.robv.android.xposed.IXposedHookLoadPackage
+-keep class * implements de.robv.android.xposed.IXposedHookZygoteInit
+-keep class * implements de.robv.android.xposed.IXposedHookInitPackageResources
+
+-keepclassmembers class ztc1997.vibrationtuner.SettingsActivity{
+    private int activatedModuleVersion();
+}
