@@ -34,8 +34,9 @@ public class XposedInit implements IXposedHookLoadPackage, IXposedHookZygoteInit
                 break;
 
             case BuildConfig.APPLICATION_ID:
-                XposedHelpers.findAndHookMethod(SettingsActivity.class.getName(),loadPackageParam.classLoader,
+                XposedHelpers.findAndHookMethod(SettingsActivity.class.getName(), loadPackageParam.classLoader,
                         "activatedModuleVersion", XC_MethodReplacement.returnConstant(BuildConfig.VERSION_CODE));
+                break;
         }
     }
 
