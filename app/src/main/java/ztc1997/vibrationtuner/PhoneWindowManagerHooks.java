@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.content.res.XResources;
+import android.os.Build;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
@@ -37,7 +38,7 @@ public class PhoneWindowManagerHooks {
     private static Context mContext;
     private static Object mPhoneWindowManager;
 
-    public static void doHook() {
+    public static void doHook(ClassLoader classLoader) {
         XSharedPreferences preferences = new XSharedPreferences(BuildConfig.APPLICATION_ID);
         Resources res = XResources.getSystem();
 
@@ -59,11 +60,13 @@ public class PhoneWindowManagerHooks {
         mClockTickVibePattern = toLongArray(res.getIntArray(clockTickVibeId));
         mCalendarDateVibePattern = toLongArray(res.getIntArray(calendarDateVibeId));
 
-        final String CLASS_PHONE_WINDOW_MANAGER = "com.android.internal.policy.impl.PhoneWindowManager";
+        final String CLASS_PHONE_WINDOW_MANAGER = Build.VERSION.SDK_INT < Build.VERSION_CODES.M ?
+                "com.android.internal.policy.impl.PhoneWindowManager" :
+                "com.android.server.policy.PhoneWindowManager";
         final String CLASS_IWINDOW_MANAGER = "android.view.IWindowManager";
         final String CLASS_WINDOW_MANAGER_FUNCS = "android.view.WindowManagerPolicy.WindowManagerFuncs";
 
-        XposedHelpers.findAndHookMethod(CLASS_PHONE_WINDOW_MANAGER, null, "init",
+        XposedHelpers.findAndHookMethod(CLASS_PHONE_WINDOW_MANAGER, classLoader, "init",
                 Context.class, CLASS_IWINDOW_MANAGER, CLASS_WINDOW_MANAGER_FUNCS, new XC_MethodHook() {
                     @Override
                     protected void afterHookedMethod(MethodHookParam param) throws Throwable {

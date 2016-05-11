@@ -17,12 +17,11 @@
 package ztc1997.vibrationtuner;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
-public class XposedInit implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class XposedInit implements IXposedHookLoadPackage {
     public static final String TAG = XposedInit.class.getSimpleName() + ": ";
     public static final String ANDROID = "android";
 
@@ -30,18 +29,27 @@ public class XposedInit implements IXposedHookLoadPackage, IXposedHookZygoteInit
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam loadPackageParam) throws Throwable {
         switch (loadPackageParam.packageName) {
             case ANDROID:
-                VibratorServiceHooks.doHook(loadPackageParam.classLoader);
+                try {
+                    VibratorServiceHooks.doHook(loadPackageParam.classLoader);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    PhoneWindowManagerHooks.doHook(loadPackageParam.classLoader);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
 
             case BuildConfig.APPLICATION_ID:
-                XposedHelpers.findAndHookMethod(SettingsActivity.class.getName(), loadPackageParam.classLoader,
-                        "activatedModuleVersion", XC_MethodReplacement.returnConstant(BuildConfig.VERSION_CODE));
+                try {
+                    XposedHelpers.findAndHookMethod(SettingsActivity.class.getName(), loadPackageParam.classLoader,
+                            "activatedModuleVersion", XC_MethodReplacement.returnConstant(BuildConfig.VERSION_CODE));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
-    }
-
-    @Override
-    public void initZygote(StartupParam startupParam) throws Throwable {
-        PhoneWindowManagerHooks.doHook();
     }
 }
